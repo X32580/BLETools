@@ -1,2 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="i.love.zi.ble" />
+    package="i.love.zi.ble" >
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <application>
+
+
+        <service android:name=".service.BLEService"></service>
+
+    </application>
+</manifest>

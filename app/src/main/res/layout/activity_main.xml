@@ -7,12 +7,43 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:gravity="center"
+
+        android:id="@+id/text"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Hello World!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="注册 蓝牙监听"
+        android:id="@+id/text2"
+        app:layout_constraintRight_toRightOf="@id/text"
+        app:layout_constraintLeft_toLeftOf="@id/text"
+        app:layout_constraintTop_toBottomOf="@id/text"
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+
+    </TextView>
+
+
+    <TextView
+
+        android:gravity="center"
+        android:text="写入指令"
+        android:id="@+id/write"
+        app:layout_constraintTop_toBottomOf="@id/text2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+
+    </TextView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
