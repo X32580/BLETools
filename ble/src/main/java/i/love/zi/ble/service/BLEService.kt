@@ -272,6 +272,7 @@ class BLEService : Service() {
                         setCharacteristicNotification(mNotifyCharacteristic, true)
 
 
+
                         //如果获取为空 则重新获取一个特征值 特征值【0000fee1-0000-1000-8000-00805f9b34fb】
                         mWriteCharacteristic = service!!.getCharacteristic(UUID.fromString(BLE_SPP_Notify_Characteristic))
 
@@ -599,6 +600,44 @@ class BLEService : Service() {
 
     }
 
+    /**
+     * 此功能需要外部调用
+     */
+    private fun disConnectBle(){
+
+        /**
+         *  断开连接的时候清除 监听器
+         */
+        clean()
+
+        bleBaseCallback =object :BLEBaseCallback{
+            override fun connectionTimedOut(state: Int) {
+
+            }
+
+            override fun onReadRemoteSignal(signal: Int) {
+
+            }
+
+            override fun writeATState(status: Boolean, at: String) {
+
+            }
+
+            override fun getData(data: String) {
+
+            }
+
+            override fun onConnectionStateChange(state: Int) {
+
+            }
+
+            override fun onConnectSuccessful() {
+
+            }
+
+        }
+
+    }
 
     /**
      *
@@ -678,7 +717,7 @@ class BLEService : Service() {
         }
 
         override fun disConnect() {
-            clean()
+            disConnectBle()
         }
 
     }
