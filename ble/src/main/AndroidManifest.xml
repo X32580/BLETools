@@ -6,7 +6,7 @@
     <application>
 
 
-        <service android:name=".service.BLEService"></service>
+        <service android:name=".service.BLEService"  />
 
     </application>
 </manifest>
