@@ -63,13 +63,22 @@ interface BLEBaseCallback {
      * @param state 状态
      *
      */
-    fun onConnectionStateChange(state: Int)
+    fun onConnectionStateChange(state: Int){
+
+    }
 
 
     /**
      * 蓝牙连接成功
      */
     fun onConnectSuccessful()
+
+    /**
+     * 蓝牙断开 回调
+     */
+    fun connectDis()
+
+
 
 
 }

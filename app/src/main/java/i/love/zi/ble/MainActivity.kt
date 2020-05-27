@@ -72,6 +72,10 @@ class MainActivity : AppCompatActivity() {
 
                 }
 
+                override fun connectDis() {
+
+                }
+
             })
         }
 

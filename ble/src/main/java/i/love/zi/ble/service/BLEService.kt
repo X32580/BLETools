@@ -125,6 +125,10 @@ class BLEService : Service() {
 
             }
 
+            override fun connectDis() {
+
+            }
+
         }
 
         countDownTimer =  object :CountDownTimer(10000,1000){
@@ -282,6 +286,7 @@ class BLEService : Service() {
 
                     state  = FIND_PASSAGEWAY_FAIL
                     bleBaseCallback.onConnectionStateChange(state)
+                    bleBaseCallback.connectDis()
 
                 }
 
@@ -432,14 +437,17 @@ class BLEService : Service() {
                     newState == android.bluetooth.BluetoothGatt.STATE_DISCONNECTED -> { //连接断开
                         state =DEVICE_DISCONNECT
                         bleBaseCallback.onConnectionStateChange(state)
+                        bleBaseCallback.connectDis()
                     }
                     status == android.bluetooth.BluetoothGatt.GATT_CONNECTION_CONGESTED -> {
                         state =DEVICE_DISCONNECT
                         bleBaseCallback.onConnectionStateChange(state)
+                        bleBaseCallback.connectDis()
                     }
                     else -> {
                         state =DEVICE_DISCONNECT
                         bleBaseCallback.onConnectionStateChange(state)
+                        bleBaseCallback.connectDis()
                     }
                 }
 
@@ -632,6 +640,10 @@ class BLEService : Service() {
             }
 
             override fun onConnectSuccessful() {
+
+            }
+
+            override fun connectDis() {
 
             }
 
