@@ -409,7 +409,6 @@ class BLEService : Service() {
 
                 sendMessage.execute {
                     bleBaseCallback.getData(String(characteristic!!.value))
-
                 }
 
 
@@ -732,6 +731,10 @@ class BLEService : Service() {
             disConnectBle()
         }
 
+        override fun cleanConnect() {
+            clean()
+        }
+
     }
 
     //对外暴露的接口
@@ -741,8 +744,15 @@ class BLEService : Service() {
 
         fun writeData(data:String)
 
+        //断开连接 并且 清除回调
         fun disConnect()
 
+        //清除蓝牙连接 不会清除接口
+        fun cleanConnect()
+
+        /**
+         * 退出才 调用 关闭蓝牙 gatt 连接
+         */
         fun exit()
 
         fun getConnectState():Boolean
