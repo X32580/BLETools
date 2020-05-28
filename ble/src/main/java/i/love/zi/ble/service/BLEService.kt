@@ -175,25 +175,7 @@ class BLEService : Service() {
         if (bluetoothAdapter == null)
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
 
-        /**
-         * 没有开启蓝牙
-         *
-         */
-        if (!bluetoothAdapter!!.isEnabled){
 
-            //开启蓝牙 默认自动调起一次开启蓝牙
-            if (enabledCount<1){
-                enabledCount++
-                bluetoothAdapter!!.enable()
-                initBluetooh()
-            }else{
-                bleBaseCallback.onError(Identification.BLUETOOTH_NOT_ON)
-            }
-
-            //防止重复 调起蓝牙
-
-            return
-        }
 
         callback  = object :BluetoothGattCallback1(){
             override fun onReadRemoteRssi(
@@ -465,6 +447,26 @@ class BLEService : Service() {
                 }
 
             }
+        }
+
+        /**
+         * 没有开启蓝牙
+         *
+         */
+        if (!bluetoothAdapter!!.isEnabled){
+
+            //开启蓝牙 默认自动调起一次开启蓝牙
+            if (enabledCount<1){
+                enabledCount++
+                bluetoothAdapter!!.enable()
+                initBluetooh()
+            }else{
+                bleBaseCallback.onError(Identification.BLUETOOTH_NOT_ON)
+            }
+
+            //防止重复 调起蓝牙
+
+            return
         }
 
 
