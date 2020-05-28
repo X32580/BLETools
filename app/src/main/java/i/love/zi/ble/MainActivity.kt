@@ -76,6 +76,10 @@ class MainActivity : AppCompatActivity() {
 
                 }
 
+                override fun onError(code: Int) {
+
+                }
+
             })
         }
 

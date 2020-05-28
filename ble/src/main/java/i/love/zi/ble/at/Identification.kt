@@ -54,7 +54,9 @@ object Identification {
     //设备连接完成
     const val DEVICE_CONNECT_SUCCESSFUL = 0x008
     //蓝牙断开
-    const val DEVICE_DISCONNECT =0x008
+    const val DEVICE_DISCONNECT =0x009
+    //蓝牙未打开
+    const val BLUETOOTH_NOT_ON =0x010
 
 
 

@@ -22,14 +22,17 @@ interface BLEBaseCallback {
      * 获取蓝牙信号
      * @param signal 信号
      */
-    fun onReadRemoteSignal( signal: Int)
+    fun onReadRemoteSignal( signal: Int){}
+
 
     /**
      *  写入 蓝牙指令
      *  @param status 写入状态
      *  @param at 写入得指令
      */
-    fun writeATState(status: Boolean,at :String)
+    fun writeATState(status: Boolean,at :String){
+
+    }
 
 
 
@@ -77,6 +80,11 @@ interface BLEBaseCallback {
      * 蓝牙断开 回调
      */
     fun connectDis()
+
+    /**
+     * 出现错误的时候
+     */
+    fun onError(code: Int)
 
 
 

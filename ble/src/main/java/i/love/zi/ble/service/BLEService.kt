@@ -13,6 +13,7 @@ import java.util.concurrent.Executors
 import android.bluetooth.BluetoothGatt as BluetoothGatt1
 import android.bluetooth.BluetoothGattCallback as BluetoothGattCallback1
 import i.love.zi.ble.at.BLEBaseCallback
+import i.love.zi.ble.at.Identification
 import i.love.zi.ble.at.Identification.BLE_SPP_Notify_Characteristic
 import i.love.zi.ble.at.Identification.BLE_SPP_Service
 import i.love.zi.ble.at.Identification.BLE_SPP_Write_Characteristic
@@ -58,7 +59,6 @@ class BLEService : Service() {
      * 处理业务 线程池
      */
     private lateinit var sendMessage : ExecutorService
-    private lateinit var writeFile : ExecutorService
     private lateinit var sendRiss : ExecutorService
 
     /**
@@ -90,7 +90,6 @@ class BLEService : Service() {
         super.onCreate()
         //两路线程 用于通信
         sendMessage = Executors.newSingleThreadExecutor()  //  发送数据线程池
-        writeFile = Executors.newSingleThreadExecutor()  //文件写入 线程池
         sendRiss = Executors.newSingleThreadExecutor() //发送 信号线程池
         bleBaseCallback = object : BLEBaseCallback{
             override fun connectionTimedOut(state: Int) {
@@ -129,6 +128,10 @@ class BLEService : Service() {
 
             }
 
+            override fun onError(code: Int) {
+
+            }
+
         }
 
         countDownTimer =  object :CountDownTimer(10000,1000){
@@ -163,6 +166,10 @@ class BLEService : Service() {
     /**
      * 初始化蓝牙
      */
+
+
+    var enabledCount = 0
+
     private fun initBluetooh(){
 
         if (bluetoothAdapter == null)
@@ -173,11 +180,17 @@ class BLEService : Service() {
          *
          */
         if (!bluetoothAdapter!!.isEnabled){
-            //开启蓝牙
-            bluetoothAdapter!!.enable()
-            //暂定 500毫秒
 
-            initBluetooh()
+            //开启蓝牙 默认自动调起一次开启蓝牙
+            if (enabledCount<1){
+                bluetoothAdapter!!.enable()
+                initBluetooh()
+            }else{
+                bleBaseCallback.onError(Identification.BLUETOOTH_NOT_ON)
+            }
+
+            //防止重复 调起蓝牙
+            enabledCount++
             return
         }
 
@@ -567,8 +580,12 @@ class BLEService : Service() {
     /**
      *
      * 连接 蓝牙
+     *
      */
     fun connectBLE(address: String) {
+
+        //调用 会清除 蓝牙自动开启 的计数器
+        enabledCount= 0
 
         this.address = address
 
@@ -610,7 +627,7 @@ class BLEService : Service() {
     /**
      * 此功能需要外部调用
      */
-    private fun disConnectBle(){
+    private fun disConnectAndRemoveCallback(){
 
         /**
          *  断开连接的时候清除 监听器
@@ -643,6 +660,10 @@ class BLEService : Service() {
             }
 
             override fun connectDis() {
+
+            }
+
+            override fun onError(code: Int) {
 
             }
 
@@ -727,11 +748,11 @@ class BLEService : Service() {
             writeBLE(data)
         }
 
-        override fun disConnect() {
-            disConnectBle()
+        override fun disConnectAndRemoveCallback() {
+            this@BLEService.disConnectAndRemoveCallback()
         }
 
-        override fun cleanConnect() {
+        override fun disConnect() {
             clean()
         }
 
@@ -745,10 +766,10 @@ class BLEService : Service() {
         fun writeData(data:String)
 
         //断开连接 并且 清除回调
-        fun disConnect()
+        fun disConnectAndRemoveCallback()
 
         //清除蓝牙连接 不会清除接口
-        fun cleanConnect()
+        fun disConnect()
 
         /**
          * 退出才 调用 关闭蓝牙 gatt 连接
