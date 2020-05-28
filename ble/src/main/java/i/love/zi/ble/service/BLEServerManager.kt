@@ -41,15 +41,12 @@ class BLEServerManager(context: Context) {
        private  var bleServerManager: BLEServerManager? = null
 
         fun getInstance():BLEServerManager{
-
             return bleServerManager!!
-
         }
 
 
         fun initBleServer(context: Context){
             bleServerManager = BLEServerManager(context)
-
         }
 
     }

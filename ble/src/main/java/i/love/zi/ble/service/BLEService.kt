@@ -183,6 +183,7 @@ class BLEService : Service() {
 
             //开启蓝牙 默认自动调起一次开启蓝牙
             if (enabledCount<1){
+                enabledCount++
                 bluetoothAdapter!!.enable()
                 initBluetooh()
             }else{
@@ -190,7 +191,7 @@ class BLEService : Service() {
             }
 
             //防止重复 调起蓝牙
-            enabledCount++
+
             return
         }
 
